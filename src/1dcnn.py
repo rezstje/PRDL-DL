@@ -28,7 +28,7 @@ else:
 useZScore = False
 cross = True
 
-##change this to the directory for the train and test set of the intra map
+## change this to the directory for the train and test set of the intra map
 directory_path_train = os.path.join(os.path.dirname(os.path.realpath(__file__)), "../data/Intra/train")
 directory_path_test = os.path.join(os.path.dirname(os.path.realpath(__file__)), "../data/Intra/test")
 
@@ -64,7 +64,7 @@ for filename in os.listdir(directory_path_test):
         all_matrices_test.append(matrix)
         labels_test.append(filename)
 
-## write code to extract the main label of the filename for train
+## Extract the main label of the filename for train
 all_labels_train = []
 
 for s in labels_train:
@@ -77,7 +77,7 @@ for s in labels_train:
     elif "task_working_memory" in s:
         all_labels_train.append("Working memory task")
 
-## write code to extract the main label of the filename for test
+## Extract the main label of the filename for test
 all_labels_test = []
 for s in labels_test:
     if "rest" in s:
@@ -89,7 +89,7 @@ for s in labels_test:
     elif "task_working_memory" in s:
         all_labels_test.append("Working memory task")
 
-#using a minmax scaler
+# Using a minmax scaler
 scaler = MinMaxScaler()
 scaled_arrays_train = []
 for array in all_matrices_train:
@@ -98,7 +98,7 @@ for array in all_matrices_train:
     scaled_array = scaled_array_reshaped.reshape(array.shape)
     scaled_arrays_train.append(scaled_array)
 
-#using a minmax scaler
+# Using a minmax scaler
 scaler = MinMaxScaler()
 scaled_arrays_test = []
 for array in all_matrices_test:
@@ -128,7 +128,7 @@ if useZScore:
     scaled_arrays_train = normalized_arrays_train
     scaled_arrays_test = normalized_arrays_test
 
-#Downsampling
+# Downsampling
 ## taking the mean of an interval of 8 frames.
 all_matrices_downsampled_train = []
 for i in range(0,len(scaled_arrays_train)):
@@ -156,7 +156,7 @@ label_binarizer = LabelBinarizer()
 
 one_hot_encoded = label_binarizer.fit_transform(all_labels_train)
 
-# memory vrijmaken
+# memory clear
 all_matrices_train = []
 all_matrices_test = []
 current_matrix = []
@@ -168,7 +168,6 @@ scaled_array_reshaped = []
 reshaped_array = []
 
 input_shape = [all_matrices_downsampled_train[0].shape[0],all_matrices_downsampled_train[0].shape[1]]
-print(np.array(all_matrices_downsampled_train).shape)
 model = Sequential()
 
 # Convolutional layers
@@ -193,6 +192,7 @@ optimizer = tf.keras.optimizers.Adam(learning_rate=0.00001)
 
 # Compile the model
 model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
+model.summary()
 
 def data_generator(data, labels, batch_size):
     num_samples = len(data)
@@ -225,6 +225,7 @@ history = model.fit(train_generator,
                     )
 
 
+# Plot Training loss on validation and train
 sns.set_theme(style = "whitegrid")
 plt.figure(figsize = (8,6))
 
@@ -239,8 +240,8 @@ sns.despine()
 plt.savefig('1dcnn_intra', transparent = True)
 plt.show()
 
-# Plot training accuracy
-plt.subplot(1, 2, 2)
+# Plot training and validation accuracy
+plt.figure(figsize = (8,6))
 plt.plot(history.history['accuracy'], label='Training Accuracy')
 plt.plot(history.history['val_accuracy'], label='Training Accuracy')
 plt.xlabel('Epoch')
