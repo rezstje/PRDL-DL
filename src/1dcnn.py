@@ -1,18 +1,14 @@
 import h5py
 import os
 import numpy as np
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
-from sklearn.metrics import accuracy_score
-from tensorflow.keras.layers import Conv1D, Flatten, Dropout, MaxPooling1D
-from tensorflow.keras.models import Sequential
-import tensorflow as tf
-from tensorflow.keras.callbacks import EarlyStopping
-from tensorflow.keras.layers import Dense
-from sklearn.preprocessing import LabelBinarizer
-from tensorflow.keras.callbacks import ModelCheckpoint
-import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.metrics import confusion_matrix, classification_report
+import tensorflow as tf
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, LabelBinarizer
+from tensorflow.keras.layers import Conv1D, Flatten, Dropout, Dense
+from tensorflow.keras.models import Sequential
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from sklearn.model_selection import train_test_split
 
 
 print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
@@ -208,7 +204,6 @@ batch_size = 3
 # Create data generators
 array_3d_train = np.stack(all_matrices_downsampled_train)
 array_3d_test = np.stack(all_matrices_downsampled_test)
-from sklearn.model_selection import train_test_split
 
 array_3d_train, array_3d_val, labels_train, labels_val = train_test_split(array_3d_train, one_hot_encoded, test_size=0.1, random_state=42)
 

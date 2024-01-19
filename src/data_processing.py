@@ -3,16 +3,6 @@ import os
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.metrics import accuracy_score
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Conv1D, MaxPooling1D, Flatten, Dense, Dropout
-
-from tensorflow.keras.models import Sequential
-from tensorflow.keras import layers, models
-import tensorflow as tf
-
-from tensorflow.keras.layers import Dense
 from sklearn.preprocessing import LabelBinarizer
 
 
