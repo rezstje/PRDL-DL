@@ -254,7 +254,7 @@ plt.show()
 predictions = model.predict(array_3d_test)
 predicted_label = label_binarizer.inverse_transform(predictions)
 accuracy = accuracy_score(all_labels_test, predicted_label)
-print(accuracy)
+print(f'Accuracy: {accuracy:.2f}')
 
 # Create a confusion matrix
 conf_matrix = confusion_matrix(all_labels_test, predicted_label)
